@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>GitHub User Fetcher</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>GitHub User Fetcher</h1>
+        <form id="github-user-12345" onsubmit="fetchUser(event)">
+            <div class="form-group">
+                <label for="username">GitHub Username</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Fetch User</button>
+        </form>
+        <h2 class="mt-4">Account Creation Date: <span id="github-created-at"></span></h2>
+    </div>
+    <script>
+        async function fetchUser(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const token = ''; // Optional: Add your token here
+            const response = await fetch(`https://api.github.com/users/${username}?token=${token}`);
+            const data = await response.json();
+            document.getElementById('github-created-at').textContent = data.created_at ? new Date(data.created_at).toISOString().split('T')[0] : 'User not found';
+        }
+    </script>
+</body>
+</html>
